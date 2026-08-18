@@ -24,12 +24,14 @@ namespace Team6.Project2.ObstaclePacks
             bool isEmpty,
             int emptyLaneCount,
             PackObstacleType obstacleType,
-            float motionStartDelay)
+            float motionStartDelay,
+            float topHoldDurationOverride)
         {
             IsEmpty = isEmpty;
             EmptyLaneCount = emptyLaneCount;
             ObstacleType = obstacleType;
             MotionStartDelay = motionStartDelay;
+            TopHoldDurationOverride = topHoldDurationOverride;
         }
 
         public bool IsEmpty { get; }
@@ -44,6 +46,12 @@ namespace Team6.Project2.ObstaclePacks
         /// </summary>
         public float MotionStartDelay { get; }
 
+        /// <summary>
+        /// Negative values use the prefab's base hold duration.
+        /// Non-negative values override it in seconds.
+        /// </summary>
+        public float TopHoldDurationOverride { get; }
+
         public int OccupiedLaneCount =>
             IsEmpty
                 ? EmptyLaneCount
@@ -55,18 +63,21 @@ namespace Team6.Project2.ObstaclePacks
                 true,
                 laneCount,
                 default(PackObstacleType),
-                0f);
+                0f,
+                -1f);
         }
 
         public static ObstaclePackItem Obstacle(
             PackObstacleType obstacleType,
-            float motionStartDelay = 0f)
+            float motionStartDelay = 0f,
+            float topHoldDurationOverride = -1f)
         {
             return new ObstaclePackItem(
                 false,
                 0,
                 obstacleType,
-                motionStartDelay);
+                motionStartDelay,
+                topHoldDurationOverride);
         }
     }
 
@@ -117,11 +128,22 @@ namespace Team6.Project2.ObstaclePacks
         private static ObstaclePackItem SmallPastry() =>
             ObstaclePackItem.Obstacle(PackObstacleType.SmallPastry);
 
-        private static ObstaclePackItem Fork(float startsAfter = 0f) =>
-            ObstaclePackItem.Obstacle(PackObstacleType.Fork, startsAfter);
+        // Second argument overrides the top hold; omit it to use the prefab default.
+        private static ObstaclePackItem Fork(
+            float startsAfter = 0f,
+            float topHoldDuration = -1f) =>
+            ObstaclePackItem.Obstacle(
+                PackObstacleType.Fork,
+                startsAfter,
+                topHoldDuration);
 
-        private static ObstaclePackItem Knife(float startsAfter = 0f) =>
-            ObstaclePackItem.Obstacle(PackObstacleType.Knife, startsAfter);
+        private static ObstaclePackItem Knife(
+            float startsAfter = 0f,
+            float topHoldDuration = -1f) =>
+            ObstaclePackItem.Obstacle(
+                PackObstacleType.Knife,
+                startsAfter,
+                topHoldDuration);
 
         private static ObstaclePackItem PizzaCutter(float startsAfter = 0f) =>
             ObstaclePackItem.Obstacle(PackObstacleType.PizzaCutter, startsAfter);

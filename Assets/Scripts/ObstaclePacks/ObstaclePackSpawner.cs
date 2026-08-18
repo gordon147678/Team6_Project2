@@ -236,7 +236,10 @@ namespace Team6.Project2.ObstaclePacks
                     rowIndex,
                     startLane,
                     occupiedLanes,
-                    item.MotionStartDelay);
+                    laneCount,
+                    laneWidth,
+                    item.MotionStartDelay,
+                    item.TopHoldDurationOverride);
 
             NotifySpawnReceivers(instance, context);
         }

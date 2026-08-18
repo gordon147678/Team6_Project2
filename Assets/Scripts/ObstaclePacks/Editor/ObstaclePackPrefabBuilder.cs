@@ -134,7 +134,7 @@ namespace Team6.Project2.ObstaclePacks.Editor
                 motionRoot,
                 new Vector3(0f, 1.45f, 0f),
                 new Vector3(1.4f, 3f, 0.7f));
-            AddVerticalMotion(root, motionRoot.transform, 1.8f, 1.5f);
+            AddVerticalMotion(root, motionRoot.transform, 1.8f, 3f, 1f);
 
             SaveAndDestroy(root, path);
         }
@@ -170,7 +170,7 @@ namespace Team6.Project2.ObstaclePacks.Editor
                 motionRoot,
                 new Vector3(0f, 1.05f, 0f),
                 new Vector3(3.8f, 1.8f, 0.75f));
-            AddVerticalMotion(root, motionRoot.transform, 2.2f, 1.8f);
+            AddVerticalMotion(root, motionRoot.transform, 2.2f, 3.6f, 1f);
 
             SaveAndDestroy(root, path);
         }
@@ -273,13 +273,15 @@ namespace Team6.Project2.ObstaclePacks.Editor
             GameObject root,
             Transform motionRoot,
             float travelDistance,
-            float cycleDuration)
+            float cycleDuration,
+            float topHoldDuration)
         {
             ObstaclePackVerticalOscillator oscillator =
                 root.AddComponent<ObstaclePackVerticalOscillator>();
             ConfigureObjectReference(oscillator, "movingPart", motionRoot);
             ConfigureFloat(oscillator, "travelDistance", travelDistance);
             ConfigureFloat(oscillator, "cycleDuration", cycleDuration);
+            ConfigureFloat(oscillator, "topHoldDuration", topHoldDuration);
             AddMotionGate(root, oscillator);
         }
 
@@ -290,9 +292,9 @@ namespace Team6.Project2.ObstaclePacks.Editor
             ObstaclePackRollingOscillator oscillator =
                 root.AddComponent<ObstaclePackRollingOscillator>();
             ConfigureObjectReference(oscillator, "movingPart", motionRoot);
-            ConfigureFloat(oscillator, "travelDistance", 2f);
+            ConfigureVector3(oscillator, "localTravelAxis", Vector3.right);
+            ConfigureFloat(oscillator, "travelDistance", 8f);
             ConfigureFloat(oscillator, "cycleDuration", 2.2f);
-            ConfigureFloat(oscillator, "wheelRadius", 0.65f);
             AddMotionGate(root, oscillator);
         }
 
@@ -437,6 +439,16 @@ namespace Team6.Project2.ObstaclePacks.Editor
         {
             SerializedObject serializedObject = new SerializedObject(target);
             serializedObject.FindProperty(propertyName).floatValue = value;
+            serializedObject.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        private static void ConfigureVector3(
+            UnityEngine.Object target,
+            string propertyName,
+            Vector3 value)
+        {
+            SerializedObject serializedObject = new SerializedObject(target);
+            serializedObject.FindProperty(propertyName).vector3Value = value;
             serializedObject.ApplyModifiedPropertiesWithoutUndo();
         }
 

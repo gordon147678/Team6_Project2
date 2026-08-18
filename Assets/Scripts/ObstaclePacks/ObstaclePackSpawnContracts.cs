@@ -8,14 +8,20 @@ namespace Team6.Project2.ObstaclePacks
             int rowIndex,
             int startLane,
             int occupiedLaneCount,
-            float motionStartDelay)
+            int laneCount,
+            float laneWidth,
+            float motionStartDelay,
+            float topHoldDurationOverride)
         {
             PackName = packName;
             PackCategory = packCategory;
             RowIndex = rowIndex;
             StartLane = startLane;
             OccupiedLaneCount = occupiedLaneCount;
+            LaneCount = laneCount;
+            LaneWidth = laneWidth;
             MotionStartDelay = motionStartDelay;
+            TopHoldDurationOverride = topHoldDurationOverride;
         }
 
         public string PackName { get; }
@@ -28,7 +34,13 @@ namespace Team6.Project2.ObstaclePacks
 
         public int OccupiedLaneCount { get; }
 
+        public int LaneCount { get; }
+
+        public float LaneWidth { get; }
+
         public float MotionStartDelay { get; }
+
+        public float TopHoldDurationOverride { get; }
     }
 
     /// <summary>

@@ -3,19 +3,18 @@ using UnityEngine;
 namespace Team6.Project2.ObstaclePacks
 {
     [DisallowMultipleComponent]
-    public sealed class ObstaclePackRollingOscillator : MonoBehaviour
+    public sealed class ObstaclePackRollingOscillator :
+        MonoBehaviour,
+        IObstaclePackSpawnReceiver
     {
         [SerializeField] private Transform movingPart;
-        [SerializeField] private Vector3 localTravelAxis = Vector3.forward;
-        [SerializeField] private Vector3 localRotationAxis = Vector3.right;
-        [SerializeField] private float travelDistance = 2f;
+        [SerializeField] private Vector3 localTravelAxis = Vector3.right;
+        [SerializeField] private float travelDistance = 8f;
         [SerializeField] private float cycleDuration = 2f;
-        [SerializeField] private float wheelRadius = 0.6f;
 
         private Vector3 baseLocalPosition;
+        private Vector3 authoredLocalPosition;
         private Quaternion baseLocalRotation;
-        private float previousOffset;
-        private float accumulatedAngle;
         private float elapsed;
 
         private void Awake()
@@ -26,19 +25,41 @@ namespace Team6.Project2.ObstaclePacks
             }
 
             baseLocalPosition = movingPart.localPosition;
+            authoredLocalPosition = baseLocalPosition;
             baseLocalRotation = movingPart.localRotation;
         }
 
         private void OnEnable()
         {
+            ResetMotion();
+        }
+
+        public void InitializeFromPack(ObstaclePackSpawnContext context)
+        {
+            float centerLane =
+                context.StartLane + (context.OccupiedLaneCount - 1) * 0.5f;
+            float spawnOffsetFromRoadCenter =
+                (centerLane - (context.LaneCount - 1) * 0.5f) *
+                context.LaneWidth;
+
+            baseLocalPosition =
+                authoredLocalPosition -
+                GetTravelAxis() * spawnOffsetFromRoadCenter;
+            travelDistance =
+                Mathf.Max(0f, (context.LaneCount - 1) * context.LaneWidth);
+
+            ResetMotion();
+        }
+
+        private void ResetMotion()
+        {
             elapsed = 0f;
-            previousOffset = -travelDistance * 0.5f;
-            accumulatedAngle = 0f;
 
             if (movingPart != null)
             {
                 movingPart.localPosition =
-                    baseLocalPosition + GetTravelAxis() * previousOffset;
+                    baseLocalPosition -
+                    GetTravelAxis() * (travelDistance * 0.5f);
                 movingPart.localRotation = baseLocalRotation;
             }
         }
@@ -56,31 +77,16 @@ namespace Team6.Project2.ObstaclePacks
                 ? phase * 2f
                 : (1f - phase) * 2f;
             float offset = (position01 - 0.5f) * travelDistance;
-            float distanceDelta = offset - previousOffset;
-            float safeRadius = Mathf.Max(0.01f, Mathf.Abs(wheelRadius));
-
-            accumulatedAngle += distanceDelta / safeRadius * Mathf.Rad2Deg;
 
             movingPart.localPosition =
                 baseLocalPosition + GetTravelAxis() * offset;
-            movingPart.localRotation =
-                baseLocalRotation *
-                Quaternion.AngleAxis(accumulatedAngle, GetRotationAxis());
-
-            previousOffset = offset;
+            movingPart.localRotation = baseLocalRotation;
         }
 
         private Vector3 GetTravelAxis()
         {
             return localTravelAxis.sqrMagnitude > 0f
                 ? localTravelAxis.normalized
-                : Vector3.forward;
-        }
-
-        private Vector3 GetRotationAxis()
-        {
-            return localRotationAxis.sqrMagnitude > 0f
-                ? localRotationAxis.normalized
                 : Vector3.right;
         }
     }

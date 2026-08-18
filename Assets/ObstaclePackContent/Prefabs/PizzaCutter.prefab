@@ -47,11 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movingPart: {fileID: 8560481724884028527}
-  localTravelAxis: {x: 0, y: 0, z: 1}
-  localRotationAxis: {x: 1, y: 0, z: 0}
-  travelDistance: 2
+  localTravelAxis: {x: 1, y: 0, z: 0}
+  travelDistance: 8
   cycleDuration: 2.2
-  wheelRadius: 0.65
 --- !u!114 &8658412341118735017
 MonoBehaviour:
   m_ObjectHideFlags: 0

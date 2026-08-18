@@ -270,7 +270,8 @@ MonoBehaviour:
   movingPart: {fileID: 9020791699773191253}
   localAxis: {x: 0, y: 1, z: 0}
   travelDistance: 2.2
-  cycleDuration: 1.8
+  cycleDuration: 3.6
+  topHoldDuration: 1
 --- !u!114 &6423544312821448866
 MonoBehaviour:
   m_ObjectHideFlags: 0
