@@ -875,6 +875,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1034721993}
   - component: {fileID: 1034721992}
+  - component: {fileID: 1034721994}
   m_Layer: 0
   m_Name: ObstacleManager
   m_TagString: Untagged
@@ -889,7 +890,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1034721991}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23b9eb3a242006e45accef41279bbe19, type: 3}
   m_Name: 
@@ -915,6 +916,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1034721994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034721991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82829184bacfb9e408d8d817e9b67492, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabBindings:
+  - obstacleType: 0
+    prefab: {fileID: 6807612386067906645, guid: 274838245c8fad24f998904912aaa265,
+      type: 3}
+    forwardMovementMode: 0
+  - obstacleType: 1
+    prefab: {fileID: 5449994687117644601, guid: 4283f84b23324f548b3868c6acddc717,
+      type: 3}
+    forwardMovementMode: 0
+  - obstacleType: 2
+    prefab: {fileID: 3567182194138007660, guid: fa83d3d3cdad7d044b98e49cdc4d1e6d,
+      type: 3}
+    forwardMovementMode: 0
+  - obstacleType: 3
+    prefab: {fileID: 5818675670391437240, guid: 025a6eb37dd6b1b46be52e5540a431a2,
+      type: 3}
+    forwardMovementMode: 0
+  - obstacleType: 4
+    prefab: {fileID: 174938154662145088, guid: 177b87622d443dc43a7e3451a0c7ccaa, type: 3}
+    forwardMovementMode: 0
+  - obstacleType: 5
+    prefab: {fileID: 8075394208455963999, guid: c0c652d3250f80242a58a029e03fa181,
+      type: 3}
+    forwardMovementMode: 0
+  laneCount: 5
+  laneWidth: 2
+  spawnY: 0
+  spawnZ: 50
+  rowInterval: 1.25
+  spawnedObjectParent: {fileID: 0}
+  obstacleSpeed: 10
+  destroyZ: -10
+  randomPackCheeseProbability: 0.5
+  preventImmediatePackRepeat: 1
+  useFixedRandomSeed: 0
+  randomSeed: 12345
+  playOnStart: 1
 --- !u!1 &1101491218
 GameObject:
   m_ObjectHideFlags: 0
